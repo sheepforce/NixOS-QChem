@@ -182,19 +182,13 @@ in with super;
     super.fftw;
 
   # Causes a lot of rebuilds
-  openblasCompat = if optAVX then
-    (super.openblas.override { blas64 = false; target="HASWELL"; }).overrideDerivation ( oa : {
-      makeFlags = map (x: if (x == "DYNAMIC_ARCH=1") then "DYNAMIC_ARCH=0" else x) oa.makeFlags;
-    })
-  else
-    super.openblasCompat;
+  openblasCompat = super.openblasCompat.overrideAttrs ( oa : {
+      makeFlags =  oa.makeFlags ++ [ "NO_AVX512=1" ];
+    });
 
-  openblas = if optAVX then
-    (super.openblas.override { target="HASWELL"; }).overrideDerivation ( oa : {
-      makeFlags = map (x: if (x == "DYNAMIC_ARCH=1") then "DYNAMIC_ARCH=0" else x) oa.makeFlags;
-    })
-  else
-    super.openblasCompat;
+  openblas = super.openblas.overrideAttrs ( oa : {
+      makeFlags =  oa.makeFlags ++ [ "NO_AVX512=1" ];
+    });
 
   ### HPC libs and Tools
 

@@ -58,7 +58,7 @@ in {
   # that need recompiling
   upstream = {
     inherit (pkgs)
-      octave;
+      openblas octave;
 
     python27scipy = pkgs.python27Packages.scipy;
     python37scipy = pkgs.python37Packages.scipy;
