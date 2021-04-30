@@ -1,0 +1,13 @@
+diff --git a/gms-files.csh b/gms-files.csh
+index 712d077..7b11914 100755
+--- a/gms-files.csh
++++ b/gms-files.csh
+@@ -28,7 +28,7 @@
+ #     to see all the file definitions (one is just below).
+ #
+ #---quiet---set echo
+-setenv AUXDATA $GMSPATH/auxdata
++setenv AUXDATA $GMSPATH/../share/gamess/auxdata
+ setenv  EXTBAS /dev/null
+ setenv  NUCBAS /dev/null
+ setenv  EXTCAB /dev/null

@@ -133,6 +133,8 @@ let
 
       gaussview = callPackage ./gaussview { };
 
+      gamess-us = callPackage ./gamess-us { stdenv = super.gcc9Stdenv; };
+
       gdma = callPackage ./gdma { };
 
       gpaw = super.python3.pkgs.toPythonApplication self.python3.pkgs.gpaw;
