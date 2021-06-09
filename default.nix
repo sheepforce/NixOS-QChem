@@ -158,6 +158,8 @@ let
 
       mctdh = callPackage ./pkgs/apps/mctdh { };
 
+      meep = callPackage ./pkgs/apps/meep { };
+
       mesa-qc = callPackage ./pkgs/apps/mesa {
         gfortran = final.gfortran6;
       };
