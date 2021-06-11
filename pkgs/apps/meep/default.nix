@@ -69,6 +69,7 @@ buildPythonPackage rec {
 
   doCheck = true;
   checkPhase = ''
+    export PYTHONPATH="$out/lib/${python.libPrefix}/site-packages:$PYTHONPATH"
     python3 << EOF
     import meep as mp
     cell = mp.Vector3(16,8,0)
