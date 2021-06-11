@@ -1,8 +1,11 @@
-{ stdenv, lib, fetchFromGitHub, autoreconfHook, gfortran, blas, lapack, fftw, hdf5-full
-, pkg-config, mpi, python3, harminv, libctl, libGDSII
+{ stdenv, lib, buildPythonPackage, fetchFromGitHub, autoreconfHook, pkg-config
+, gfortran, mpi, blas, lapack, fftw, hdf5-full, swig, gsl, harminv, libctl
+, libGDSII
+# Python
+, python, numpy, scipy, matplotlib, h5py, cython, autograd, mpi4py
 } :
 
-stdenv.mkDerivation rec {
+buildPythonPackage rec {
   pname = "meep";
   version = "1.18.0";
 
@@ -17,9 +20,12 @@ stdenv.mkDerivation rec {
     autoreconfHook
     gfortran
     pkg-config
+    swig
+    mpi
   ];
 
   buildInputs = [
+    gsl
     blas
     lapack
     fftw
@@ -31,14 +37,32 @@ stdenv.mkDerivation rec {
 
   propagatedBuildInputs = [
     mpi
-    python3
+    numpy
+    scipy
+    matplotlib
+    h5py
+    cython
+    autograd
+    mpi4py
   ];
+
   propagatedUserEnvPkgs = [ mpi ];
+
+  dontUseSetuptoolsBuild = true;
+  dontUsePipInstall = true;
+  dontUseSetuptoolsCheck = true;
+
+  HDF5_MPI = "ON";
+  PYTHON = "${python}/bin/${python.executable}";
+
+  enableParallelBuilding = true;
 
   configureFlags = [
     "--without-libctl"
+    "--enable-shared"
     "--with-mpi"
     "--with-openmp"
+    "--enable-maintainer-mode"
   ];
 
   passthru = { inherit mpi; };
